@@ -6,6 +6,7 @@ export default function App() {
   const [words, setWords] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [resolution, setResolution] = useState(400);
+  const [blurLevel, setBlurLevel] = useState(0);
   const stickerRef = useRef<HTMLDivElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,26 +139,45 @@ export default function App() {
             style={{ width: `${resolution}px`, height: `${resolution}px` }}
           >
             <div className="w-full h-full flex items-center justify-center">
-              <p className="text-black font-sans text-5xl leading-[1.2] text-left break-words w-full" style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>
+              <p 
+                className="text-black font-sans text-5xl leading-[1.2] text-left break-words w-full" 
+                style={{ fontFamily: 'Arial, Helvetica, sans-serif', filter: `blur(${blurLevel}px)` }}
+              >
                 {displayText}
               </p>
             </div>
           </div>
 
-          {/* Slider Resolusi */}
-          <div className="absolute bottom-4 left-0 w-full px-8 z-20 flex flex-col items-center gap-2">
-            <div className="flex items-center justify-between w-full px-4 py-2 bg-neutral-900/90 backdrop-blur border border-neutral-800 rounded-full shadow-lg">
-              <span className="text-xs font-medium text-neutral-400">200px</span>
+          {/* Pengaturan Slider */}
+          <div className="absolute bottom-4 left-0 w-full px-8 z-20 flex flex-col gap-2">
+            
+            {/* Slider Resolusi */}
+            <div className="flex items-center gap-3 w-full px-4 py-2 bg-neutral-900/90 backdrop-blur border border-neutral-800 rounded-full shadow-lg">
+              <span className="text-[10px] font-bold text-neutral-400 uppercase w-12 text-right">Size</span>
               <input 
                 type="range" 
                 min="200" 
                 max="600" 
                 value={resolution} 
                 onChange={(e) => setResolution(Number(e.target.value))}
-                className="w-48 h-2 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+                className="flex-1 h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-cyan-500"
               />
-              <span className="text-xs font-medium text-neutral-400">600px</span>
             </div>
+
+            {/* Slider Blur */}
+            <div className="flex items-center gap-3 w-full px-4 py-2 bg-neutral-900/90 backdrop-blur border border-neutral-800 rounded-full shadow-lg">
+              <span className="text-[10px] font-bold text-neutral-400 uppercase w-12 text-right">Blur</span>
+              <input 
+                type="range" 
+                min="0" 
+                max="10"
+                step="0.1" 
+                value={blurLevel} 
+                onChange={(e) => setBlurLevel(Number(e.target.value))}
+                className="flex-1 h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-purple-500"
+              />
+            </div>
+
           </div>
         </div>
 
