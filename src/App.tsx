@@ -3,15 +3,33 @@ import { toPng } from 'html-to-image';
 import { Download, Plus, Trash2, RefreshCw } from 'lucide-react';
 
 export default function App() {
-  const [words, setWords] = useState<string[]>(['ANOMALI', 'ITU', 'NYATA']);
+  const [words, setWords] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState('');
   const stickerRef = useRef<HTMLDivElement>(null);
 
-  const handleAddWord = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (inputValue.trim()) {
-      setWords([...words, inputValue.trim()]);
-      setInputValue('');
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Jika ada spasi, pisahkan kata dan masukkan ke dalam list words
+    if (value.includes(' ')) {
+      const parts = value.split(' ');
+      const newWords = parts.slice(0, -1).filter((w) => w.trim() !== '');
+      if (newWords.length > 0) {
+        setWords([...words, ...newWords]);
+      }
+      // Sisa karakter setelah spasi terakhir menjadi inputValue baru
+      setInputValue(parts[parts.length - 1]);
+    } else {
+      setInputValue(value);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (inputValue.trim()) {
+        setWords([...words, inputValue.trim()]);
+        setInputValue('');
+      }
     }
   };
 
@@ -24,8 +42,8 @@ export default function App() {
       return;
     }
 
-    // Capture the sticker as PNG with a transparent background
-    toPng(stickerRef.current, { cacheBust: true, backgroundColor: 'rgba(0,0,0,0)' })
+    // Capture the sticker as PNG
+    toPng(stickerRef.current, { cacheBust: true })
       .then((dataUrl) => {
         const link = document.createElement('a');
         link.download = 'sticker-anomali.png';
@@ -36,6 +54,9 @@ export default function App() {
         console.error('Oops, something went wrong!', err);
       });
   }, [stickerRef]);
+
+  // Teks gabungan dari words dan input yang sedang diketik
+  const displayText = [...words, inputValue].filter(Boolean).join(' ');
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100 flex items-center justify-center p-4 font-sans">
@@ -48,25 +69,20 @@ export default function App() {
               Sticker Anomali Generator
             </h1>
             <p className="text-neutral-400 text-sm">
-              Buat stiker WhatsApp keren dengan gaya teks per kata.
+              Ketik kata dan tekan spasi. Teks akan otomatis terangkai.
             </p>
           </div>
 
-          <form onSubmit={handleAddWord} className="flex gap-2">
+          <div className="flex flex-col gap-2">
             <input
               type="text"
               value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Masukkan kata..."
-              className="flex-1 bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-2 focus:outline-none focus:border-cyan-500 transition-colors placeholder:text-neutral-600"
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+              placeholder="Ketik di sini (otomatis terpisah spasi)..."
+              className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-3 focus:outline-none focus:border-cyan-500 transition-colors placeholder:text-neutral-600 text-lg"
             />
-            <button
-              type="submit"
-              className="bg-cyan-500 hover:bg-cyan-400 text-neutral-950 font-bold p-2 rounded-lg transition-colors flex items-center justify-center"
-            >
-              <Plus size={24} />
-            </button>
-          </form>
+          </div>
 
           <div className="flex flex-col gap-2">
             <h3 className="text-sm font-semibold text-neutral-500 uppercase tracking-wider">
@@ -122,7 +138,7 @@ export default function App() {
           >
             <div className="w-full h-full flex items-center justify-center">
               <p className="text-black font-sans text-5xl leading-[1.2] text-left break-words w-full" style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>
-                {words.join(' ')}
+                {displayText}
               </p>
             </div>
           </div>
