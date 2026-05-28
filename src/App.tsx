@@ -162,6 +162,9 @@ export default function App() {
                 onChange={(e) => setResolution(Number(e.target.value))}
                 className="flex-1 h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-cyan-500"
               />
+              <span className="text-[10px] font-mono font-medium text-neutral-300 w-16 text-left">
+                {resolution}x{resolution}
+              </span>
             </div>
 
             {/* Slider Blur */}
@@ -176,6 +179,9 @@ export default function App() {
                 onChange={(e) => setBlurLevel(Number(e.target.value))}
                 className="flex-1 h-1.5 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-purple-500"
               />
+              <span className="text-[10px] font-mono font-medium text-neutral-300 w-16 text-left">
+                {blurLevel}px
+              </span>
             </div>
 
           </div>
