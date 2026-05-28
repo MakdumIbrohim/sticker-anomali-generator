@@ -65,9 +65,9 @@ export default function App() {
       <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         
         {/* Control Panel */}
-        <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-2xl shadow-2xl flex flex-col gap-6">
+        <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-2xl flex flex-col gap-6">
           <div>
-            <h1 className="text-3xl font-black bg-gradient-to-br from-cyan-400 to-blue-600 bg-clip-text text-transparent mb-2">
+            <h1 className="text-3xl font-bold text-white mb-2">
               Sticker Anomali Generator
             </h1>
             <p className="text-neutral-400 text-sm">
@@ -82,12 +82,12 @@ export default function App() {
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               placeholder="Ketik di sini (otomatis terpisah spasi)..."
-              className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-3 focus:outline-none focus:border-cyan-500 transition-colors placeholder:text-neutral-600 text-lg"
+              className="w-full bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-3 focus:outline-none focus:border-neutral-500 transition-colors placeholder:text-neutral-600 text-white text-lg"
             />
           </div>
 
           <div className="flex flex-col gap-2">
-            <h3 className="text-sm font-semibold text-neutral-500 uppercase tracking-wider">
+            <h3 className="text-sm font-medium text-neutral-500">
               Daftar Kata (Klik untuk hapus)
             </h3>
             <div className="flex flex-wrap gap-2">
@@ -98,7 +98,7 @@ export default function App() {
                   <button
                     key={index}
                     onClick={() => handleRemoveWord(index)}
-                    className="group flex items-center gap-1 bg-neutral-800 hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/50 border border-neutral-700 px-3 py-1.5 rounded-md transition-all text-sm font-medium"
+                    className="group flex items-center gap-1 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 px-3 py-1.5 rounded-md transition-colors text-sm text-neutral-300"
                     title="Hapus kata"
                   >
                     {word}
@@ -111,8 +111,8 @@ export default function App() {
 
           <button
             onClick={handleDownload}
-            disabled={words.length === 0}
-            className="mt-4 w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)]"
+            disabled={words.length === 0 && !inputValue}
+            className="mt-4 w-full bg-white hover:bg-neutral-200 disabled:opacity-50 disabled:cursor-not-allowed text-black font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors"
           >
             <Download size={20} />
             Download Sticker
