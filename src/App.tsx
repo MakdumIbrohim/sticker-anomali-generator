@@ -5,6 +5,7 @@ import { Download, Plus, Trash2, RefreshCw } from 'lucide-react';
 export default function App() {
   const [words, setWords] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState('');
+  const [resolution, setResolution] = useState(400);
   const stickerRef = useRef<HTMLDivElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,14 +134,29 @@ export default function App() {
           {/* Actual Sticker Canvas (What gets downloaded) */}
           <div 
             ref={stickerRef}
-            className="relative z-10 flex flex-col items-center justify-center bg-white p-8 resize overflow-hidden border-2 border-dashed border-neutral-400/50 hover:border-cyan-500 transition-colors"
-            style={{ width: '400px', height: '400px', minWidth: '200px', minHeight: '200px', maxWidth: '100%', maxHeight: '100%' }}
-            title="Tarik ujung kanan bawah untuk mengubah ukuran"
+            className="relative z-10 flex flex-col items-center justify-center bg-white p-8 overflow-hidden transition-all duration-100 ease-linear shadow-lg"
+            style={{ width: `${resolution}px`, height: `${resolution}px` }}
           >
             <div className="w-full h-full flex items-center justify-center">
               <p className="text-black font-sans text-5xl leading-[1.2] text-left break-words w-full" style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>
                 {displayText}
               </p>
+            </div>
+          </div>
+
+          {/* Slider Resolusi */}
+          <div className="absolute bottom-4 left-0 w-full px-8 z-20 flex flex-col items-center gap-2">
+            <div className="flex items-center justify-between w-full px-4 py-2 bg-neutral-900/90 backdrop-blur border border-neutral-800 rounded-full shadow-lg">
+              <span className="text-xs font-medium text-neutral-400">200px</span>
+              <input 
+                type="range" 
+                min="200" 
+                max="600" 
+                value={resolution} 
+                onChange={(e) => setResolution(Number(e.target.value))}
+                className="w-48 h-2 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+              />
+              <span className="text-xs font-medium text-neutral-400">600px</span>
             </div>
           </div>
         </div>
