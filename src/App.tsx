@@ -133,8 +133,9 @@ export default function App() {
           {/* Actual Sticker Canvas (What gets downloaded) */}
           <div 
             ref={stickerRef}
-            className="relative z-10 w-full h-full flex flex-col items-center justify-center bg-white p-8"
-            style={{ width: '512px', height: '512px', transform: 'scale(0.8)' }}
+            className="relative z-10 flex flex-col items-center justify-center bg-white p-8 resize overflow-hidden border-2 border-dashed border-neutral-400/50 hover:border-cyan-500 transition-colors"
+            style={{ width: '400px', height: '400px', minWidth: '200px', minHeight: '200px', maxWidth: '100%', maxHeight: '100%' }}
+            title="Tarik ujung kanan bawah untuk mengubah ukuran"
           >
             <div className="w-full h-full flex items-center justify-center">
               <p className="text-black font-sans text-5xl leading-[1.2] text-left break-words w-full" style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>
