@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
 import { toPng } from 'html-to-image';
-import { Download, Plus, Trash2, RefreshCw } from 'lucide-react';
+import { Download, Trash2 } from 'lucide-react';
 
 export default function App() {
   const [words, setWords] = useState<string[]>([]);
